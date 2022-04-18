@@ -1,19 +1,20 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import { studentModel } from '../models/studentModel.js';
 const app = express();
 
-app.post('/student', async (res, req) => {
+app.post('/student', async (req, res) => {
 
   try {
     const student = new studentModel(req.body);
     await student.save();
     res.send(student);
   } catch (err) {
-    res.status(500).send(err);
+    res.tatus(500).send(err);
   }
 });
 
-app.get('/', async (res, req) => {
+app.get('/', async (req, res) => {
   try {
     const student = await studentModel.find({});
     res.send(student);
@@ -24,7 +25,7 @@ app.get('/', async (res, req) => {
   }
 });
 
-app.patch('student/:id', async (res, req) => {
+app.patch('student/:id', async (req, res) => {
   try {
     const id = req.params.id;
     studentModel.findByIdAndUpdate({ _id: id }, req.body, req.body, {
@@ -36,7 +37,7 @@ app.patch('student/:id', async (res, req) => {
   }
 });
 
-app.delete('/student/:id', async (res, req) => {
+app.delete('/student/:id', async (req, res) => {
   try {
     const student = studentModel.findByIdAndDelete({ _id: req.params.id });
     if (!student) {
@@ -48,4 +49,6 @@ app.delete('/student/:id', async (res, req) => {
     res.statusCode(500).send(err);
   }
 })
+
+
 export { app as studentRouter };
