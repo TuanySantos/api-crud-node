@@ -14,7 +14,7 @@ app.post('/student', async (req, res) => {
   }
 });
 
-app.get('/', async (req, res) => {
+app.get('/student', async (req, res) => {
   try {
     const student = await studentModel.find({});
     res.send(student);
@@ -28,9 +28,14 @@ app.get('/', async (req, res) => {
 app.patch('student/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    studentModel.findByIdAndUpdate({ _id: id }, req.body, req.body, {
-      new: true,
-    });
+    const student = await studentModel.findByIdAndUpdate(
+      { _id: id },
+      req.body,
+      {
+        new: true,
+      }
+    );
+
     res.send(student);
   } catch (err) {
     res.statusCode(500).send(err);
@@ -41,7 +46,7 @@ app.delete('/student/:id', async (req, res) => {
   try {
     const student = studentModel.findByIdAndDelete({ _id: req.params.id });
     if (!student) {
-      console.log('Documento não encontrado')
+      res.status(400).send('Documento não encontrado');
     } else {
       res.send(200).send();
     }

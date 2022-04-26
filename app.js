@@ -26,6 +26,6 @@ const app = express();
 app.use(express.json());
 app.use(studentRouter);
 
-app.listen(3000, () => {
+app.listen(3002, () => {
   console.log('API started...')
 });
