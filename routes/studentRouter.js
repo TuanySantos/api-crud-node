@@ -25,7 +25,7 @@ app.get('/student', async (req, res) => {
   }
 });
 
-app.patch('student/:id', async (req, res) => {
+app.patch('/student/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const student = await studentModel.findByIdAndUpdate(
@@ -33,8 +33,7 @@ app.patch('student/:id', async (req, res) => {
       req.body,
       {
         new: true,
-      }
-    );
+      });
 
     res.send(student);
   } catch (err) {
