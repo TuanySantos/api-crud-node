@@ -43,11 +43,11 @@ app.patch('/student/:id', async (req, res) => {
 
 app.delete('/student/:id', async (req, res) => {
   try {
-    const student = studentModel.findByIdAndDelete({ _id: req.params.id });
+    const student = await studentModel.findByIdAndDelete({ _id: req.params.id });
     if (!student) {
       res.status(400).send('Documento não encontrado');
     } else {
-      res.send(200).send();
+      res.status(200).send();
     }
   } catch (err) {
     res.statusCode(500).send(err);
